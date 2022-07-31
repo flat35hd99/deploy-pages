@@ -7127,12 +7127,11 @@ class Deployment {
           throw new Error('No uploaded artifact was found! Please check if there are any errors at build step.')
         }
 
-        let artifactUrl
-        if (data.value.some(artifact => artifact.name == 'github-pages')) {
-          artifactUrl = `${data.value[0].url}&%24expand=SignedContent`
-        } else {
-          artifactUrl = `${data.value[0].url}&%24expand=SignedContent`
-        }
+        // If there is an artifact named "githug-pages", use it.
+        // Otherwise, use the first artifact.
+        const artifactIndex = Math.max(data.value.findIndex(x => x.name == 'github-pages'), 0)
+        const artifactUrl = `${data.value[artifactIndex].url}&%24expand=SignedContent`
+
         const payload = {
           artifact_url: artifactUrl,
           pages_build_version: this.buildVersion,
