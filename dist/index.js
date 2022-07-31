@@ -7126,7 +7126,13 @@ class Deployment {
         if (data.value.length == 0) {
           throw new Error('No uploaded artifact was found! Please check if there are any errors at build step.')
         }
-        const artifactUrl = `${data.value[0].url}&%24expand=SignedContent`
+
+        let artifactUrl
+        if (data.value.some(artifact => artifact.name == 'github-pages')) {
+          artifactUrl = `${data.value[0].url}&%24expand=SignedContent`
+        } else {
+          artifactUrl = `${data.value[0].url}&%24expand=SignedContent`
+        }
         const payload = {
           artifact_url: artifactUrl,
           pages_build_version: this.buildVersion,
