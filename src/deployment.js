@@ -48,7 +48,7 @@ class Deployment {
         }
 
         let artifactUrl
-        if (data.values.some(artifact => artifact.name == 'github-pages')) {
+        if (data.value.some(artifact => artifact.name == 'github-pages')) {
           artifactUrl = `${data.value[0].url}&%24expand=SignedContent`
         } else {
           artifactUrl = `${data.value[0].url}&%24expand=SignedContent`
